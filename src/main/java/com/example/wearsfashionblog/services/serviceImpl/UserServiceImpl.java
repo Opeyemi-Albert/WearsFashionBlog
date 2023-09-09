@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final ResponseManager responseManager;
+    private final ResponseManager<UserResponseDto> responseManager;
     private final HttpSession httpSession;
 
     @Override
@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiResponse<UserResponseDto> signup(UserSignupDto userSignupDto) throws AlreadyExistsException {
-        ApiResponse apiResponse;
+        ApiResponse<UserResponseDto> apiResponse;
 
         boolean emailExistStatus = isEmailExist(userSignupDto.getEmail());
 
-        if(emailExistStatus == true){
+        if(emailExistStatus){
             throw new AlreadyExistsException("Email already exists");
         }
 
@@ -55,15 +55,14 @@ public class UserServiceImpl implements UserService {
     public ApiResponse<UserResponseDto> login(String email, String password) throws NotFoundException {
         boolean isBloggerExistStatus = userRepository.existsByEmailAndPassword(email, password);
 
-        if(isBloggerExistStatus == false)
+        if(!isBloggerExistStatus)
             throw new NotFoundException("Invalid credentials");
 
         User user = userRepository.findByEmailAndPassword(email,password);
         UserResponseDto userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(user, userResponseDto);
         httpSession.setAttribute("userId",user.getId());
-        ApiResponse<UserResponseDto> apiResponse = responseManager.success(userResponseDto);
 
-        return apiResponse;
+        return responseManager.success(userResponseDto);
     }
 }
