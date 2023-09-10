@@ -4,6 +4,6 @@
 #ENTRYPOINT ["java","-jar","/app.jar"]
 
 FROM openjdk:17
-EXPOSE 8085
+#EXPOSE 8085
 ADD target/wears-fashionblog.jar wears-fashionblog.jar
 ENTRYPOINT ["java","-jar","/springboot-project.jar"]
