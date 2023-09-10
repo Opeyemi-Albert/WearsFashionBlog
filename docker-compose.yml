@@ -6,7 +6,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fashionBlog
     ports:
-      - "8000:8080"
+      - "8000:8086"
     restart: always
     depends_on:
       - db
@@ -14,9 +14,9 @@ services:
     image: postgres
     container_name: db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Opeyemi1234
-      - POSTGRES_DB=fashionBlog
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=tests
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - pgdata:/var/lib/postgresql/data
