@@ -5,5 +5,5 @@
 
 FROM openjdk:17
 EXPOSE 8085
-ADD target/springboot-project.jar springboot-project.jar
-ENTRYPOINT ["java","-jar","/springboot-project.jar"
+ADD target/wears-fashionblog.jar wears-fashionblog.jar
+ENTRYPOINT ["java","-jar","/springboot-project.jar"]
